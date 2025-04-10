@@ -22,15 +22,27 @@ export default function MobileMenu({ isOpen, onClose, isLoggedIn, onLogout }: Mo
         >
           الرئيسية
         </Link>
-        <a href="/#courses" onClick={onClose} className="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-primary hover:bg-neutral-100">
+        <Link 
+          href="/courses" 
+          onClick={onClose} 
+          className="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-primary hover:bg-neutral-100"
+        >
           الدورات
-        </a>
-        <a href="#" onClick={onClose} className="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-primary hover:bg-neutral-100">
+        </Link>
+        <Link 
+          href="/about" 
+          onClick={onClose} 
+          className="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-primary hover:bg-neutral-100"
+        >
           عن المنصة
-        </a>
-        <a href="#" onClick={onClose} className="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-primary hover:bg-neutral-100">
+        </Link>
+        <Link 
+          href="/contact" 
+          onClick={onClose} 
+          className="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-primary hover:bg-neutral-100"
+        >
           تواصل معنا
-        </a>
+        </Link>
         <div className="mt-3 space-y-2">
           {isLoggedIn ? (
             <>

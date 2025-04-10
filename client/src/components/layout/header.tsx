@@ -40,15 +40,15 @@ export default function Header() {
               >
                 الرئيسية
               </Link>
-              <a href="/#courses" className="text-neutral-700 hover:text-primary px-3 py-2 text-sm font-medium">
+              <Link href="/courses" className="text-neutral-700 hover:text-primary px-3 py-2 text-sm font-medium">
                 الدورات
-              </a>
-              <a href="#" className="text-neutral-700 hover:text-primary px-3 py-2 text-sm font-medium">
+              </Link>
+              <Link href="/about" className="text-neutral-700 hover:text-primary px-3 py-2 text-sm font-medium">
                 عن المنصة
-              </a>
-              <a href="#" className="text-neutral-700 hover:text-primary px-3 py-2 text-sm font-medium">
+              </Link>
+              <Link href="/contact" className="text-neutral-700 hover:text-primary px-3 py-2 text-sm font-medium">
                 تواصل معنا
-              </a>
+              </Link>
             </nav>
           </div>
           <div className="flex items-center">
