@@ -13,6 +13,9 @@ import { ProtectedRoute } from "@/lib/protected-route";
 // استيراد مكون مبدل اللغة
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 
+// استيراد صفحة الملف الشخصي
+import ProfilePage from "@/pages/profile-page";
+
 function Router() {
   return (
     <Switch>
@@ -21,6 +24,7 @@ function Router() {
       <ProtectedRoute path="/dashboard" component={DashboardPage} />
       <ProtectedRoute path="/course/:id" component={CoursePage} />
       <ProtectedRoute path="/certificate/:id" component={CertificatePage} />
+      <ProtectedRoute path="/profile" component={ProfilePage} />
       <Route component={NotFound} />
     </Switch>
   );

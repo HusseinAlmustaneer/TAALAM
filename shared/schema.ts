@@ -9,6 +9,7 @@ export const users = pgTable("users", {
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
   email: text("email").notNull().unique(),
+  phone: text("phone"),
 });
 
 export const courses = pgTable("courses", {
@@ -113,3 +114,31 @@ export const registerSchema = insertUserSchema.extend({
 });
 
 export type RegisterData = z.infer<typeof registerSchema>;
+
+// مخطط تحديث البريد الإلكتروني
+export const updateEmailSchema = z.object({
+  email: z.string().email({ message: "يرجى إدخال بريد إلكتروني صحيح" }),
+  password: z.string().min(1, { message: "كلمة المرور مطلوبة للتأكيد" }),
+});
+
+export type UpdateEmailData = z.infer<typeof updateEmailSchema>;
+
+// مخطط تحديث رقم الهاتف
+export const updatePhoneSchema = z.object({
+  phone: z.string().min(9, { message: "يجب أن يتكون رقم الهاتف من 9 أرقام على الأقل" }),
+  password: z.string().min(1, { message: "كلمة المرور مطلوبة للتأكيد" }),
+});
+
+export type UpdatePhoneData = z.infer<typeof updatePhoneSchema>;
+
+// مخطط تغيير كلمة المرور
+export const updatePasswordSchema = z.object({
+  currentPassword: z.string().min(1, { message: "كلمة المرور الحالية مطلوبة" }),
+  newPassword: z.string()
+    .min(8, { message: "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل" })
+    .regex(/[A-Z]/, { message: "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل" })
+    .regex(/[a-z]/, { message: "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل" })
+    .regex(/[0-9]/, { message: "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل" }),
+});
+
+export type UpdatePasswordData = z.infer<typeof updatePasswordSchema>;

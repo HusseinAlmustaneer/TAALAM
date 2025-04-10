@@ -3,8 +3,14 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
 import { z } from "zod";
-import { insertEnrollmentSchema } from "@shared/schema";
+import { 
+  insertEnrollmentSchema, 
+  updateEmailSchema, 
+  updatePhoneSchema, 
+  updatePasswordSchema
+} from "@shared/schema";
 import { randomUUID } from "crypto";
+import { comparePasswords, hashPassword } from "./auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Set up authentication routes
@@ -275,6 +281,229 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       next(error);
+    }
+  });
+
+  // تحديث البريد الإلكتروني للمستخدم
+  app.patch("/api/user/email", async (req, res, next) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ 
+          success: false,
+          message: "غير مصرح" 
+        });
+      }
+
+      console.log("Email update request received:", { userId: req.user!.id });
+      
+      // التحقق من البيانات باستخدام مخطط التحديث
+      const result = updateEmailSchema.safeParse(req.body);
+      if (!result.success) {
+        console.log("Validation errors:", result.error.format());
+        return res.status(400).json({ 
+          success: false,
+          errors: result.error.format() 
+        });
+      }
+
+      const { email, password } = result.data;
+      const userId = req.user!.id;
+      
+      // التحقق من كلمة المرور
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ 
+          success: false,
+          message: "المستخدم غير موجود" 
+        });
+      }
+      
+      const passwordValid = await comparePasswords(password, user.password);
+      if (!passwordValid) {
+        console.log("Password validation failed for email update");
+        return res.status(401).json({
+          success: false,
+          message: "كلمة المرور غير صحيحة"
+        });
+      }
+      
+      // التحقق من عدم استخدام البريد الإلكتروني من قبل مستخدم آخر
+      const existingEmail = await storage.getUserByEmail(email);
+      if (existingEmail && existingEmail.id !== userId) {
+        console.log(`Email ${email} already exists for another user`);
+        return res.status(400).json({ 
+          success: false,
+          message: "البريد الإلكتروني مستخدم بالفعل" 
+        });
+      }
+      
+      // تحديث البريد الإلكتروني
+      await storage.updateUserEmail(userId, email);
+      console.log(`Email updated for user ID ${userId} to ${email}`);
+      
+      // إعادة تحميل المستخدم في الجلسة
+      const updatedUser = await storage.getUser(userId);
+      if (updatedUser) {
+        req.login(updatedUser, (err) => {
+          if (err) return next(err);
+        });
+      }
+      
+      // إزالة كلمة المرور من الاستجابة
+      const { password: _, ...userWithoutPassword } = updatedUser || user;
+      
+      res.json({
+        success: true,
+        message: "تم تحديث البريد الإلكتروني بنجاح",
+        user: userWithoutPassword
+      });
+    } catch (error: any) {
+      console.error("Error updating email:", error);
+      res.status(500).json({ 
+        success: false,
+        message: error.message || "حدث خطأ أثناء تحديث البريد الإلكتروني" 
+      });
+    }
+  });
+  
+  // تحديث رقم الهاتف للمستخدم
+  app.patch("/api/user/phone", async (req, res, next) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ 
+          success: false,
+          message: "غير مصرح" 
+        });
+      }
+
+      console.log("Phone update request received:", { userId: req.user!.id });
+      
+      // التحقق من البيانات باستخدام مخطط التحديث
+      const result = updatePhoneSchema.safeParse(req.body);
+      if (!result.success) {
+        console.log("Validation errors:", result.error.format());
+        return res.status(400).json({ 
+          success: false,
+          errors: result.error.format() 
+        });
+      }
+
+      const { phone, password } = result.data;
+      const userId = req.user!.id;
+      
+      // التحقق من كلمة المرور
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ 
+          success: false,
+          message: "المستخدم غير موجود" 
+        });
+      }
+      
+      const passwordValid = await comparePasswords(password, user.password);
+      if (!passwordValid) {
+        console.log("Password validation failed for phone update");
+        return res.status(401).json({
+          success: false,
+          message: "كلمة المرور غير صحيحة"
+        });
+      }
+      
+      // تحديث رقم الهاتف
+      await storage.updateUserPhone(userId, phone);
+      console.log(`Phone updated for user ID ${userId} to ${phone}`);
+      
+      // إعادة تحميل المستخدم في الجلسة
+      const updatedUser = await storage.getUser(userId);
+      if (updatedUser) {
+        req.login(updatedUser, (err) => {
+          if (err) return next(err);
+        });
+      }
+      
+      // إزالة كلمة المرور من الاستجابة
+      const { password: _, ...userWithoutPassword } = updatedUser || user;
+      
+      res.json({
+        success: true,
+        message: "تم تحديث رقم الهاتف بنجاح",
+        user: userWithoutPassword
+      });
+    } catch (error: any) {
+      console.error("Error updating phone:", error);
+      res.status(500).json({ 
+        success: false,
+        message: error.message || "حدث خطأ أثناء تحديث رقم الهاتف" 
+      });
+    }
+  });
+  
+  // تغيير كلمة المرور
+  app.patch("/api/user/password", async (req, res, next) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ 
+          success: false,
+          message: "غير مصرح" 
+        });
+      }
+
+      console.log("Password update request received:", { userId: req.user!.id });
+      
+      // التحقق من البيانات باستخدام مخطط التحديث
+      const result = updatePasswordSchema.safeParse(req.body);
+      if (!result.success) {
+        console.log("Validation errors:", result.error.format());
+        return res.status(400).json({ 
+          success: false,
+          errors: result.error.format() 
+        });
+      }
+
+      const { currentPassword, newPassword } = result.data;
+      const userId = req.user!.id;
+      
+      // التحقق من كلمة المرور الحالية
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ 
+          success: false,
+          message: "المستخدم غير موجود" 
+        });
+      }
+      
+      const passwordValid = await comparePasswords(currentPassword, user.password);
+      if (!passwordValid) {
+        console.log("Current password validation failed for password update");
+        return res.status(401).json({
+          success: false,
+          message: "كلمة المرور الحالية غير صحيحة"
+        });
+      }
+      
+      // تشفير كلمة المرور الجديدة وتخزينها
+      const hashedPassword = await hashPassword(newPassword);
+      await storage.updateUserPassword(userId, hashedPassword);
+      console.log(`Password updated for user ID ${userId}`);
+      
+      // إعادة تحميل المستخدم في الجلسة
+      const updatedUser = await storage.getUser(userId);
+      if (updatedUser) {
+        req.login(updatedUser, (err) => {
+          if (err) return next(err);
+        });
+      }
+      
+      res.json({
+        success: true,
+        message: "تم تغيير كلمة المرور بنجاح"
+      });
+    } catch (error: any) {
+      console.error("Error updating password:", error);
+      res.status(500).json({ 
+        success: false,
+        message: error.message || "حدث خطأ أثناء تغيير كلمة المرور" 
+      });
     }
   });
 
