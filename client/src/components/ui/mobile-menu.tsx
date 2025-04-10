@@ -61,10 +61,12 @@ export default function MobileMenu({ isOpen, onClose, isLoggedIn, onLogout }: Mo
               >
                 تسجيل الدخول
               </Link>
-              <Link href="/auth?tab=register">
-                <a onClick={onClose} className="w-full flex justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                  إنشاء حساب
-                </a>
+              <Link 
+                href="/auth?tab=register"
+                className="w-full flex justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                onClick={onClose}
+              >
+                إنشاء حساب
               </Link>
             </>
           )}
