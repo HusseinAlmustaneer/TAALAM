@@ -11,6 +11,7 @@ export function ProtectedRoute({
 }) {
   const { user, isLoading } = useAuth();
 
+  // استخدام Route المعتاد مع وظيفة داخلية تعيد العنصر المناسب
   return (
     <Route path={path}>
       {() => {
@@ -26,6 +27,7 @@ export function ProtectedRoute({
           return <Redirect to="/auth" />;
         }
 
+        // إعادة المكون المطلوب إذا كان المستخدم مسجل الدخول
         return <Component />;
       }}
     </Route>

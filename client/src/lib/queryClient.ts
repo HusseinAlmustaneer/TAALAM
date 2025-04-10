@@ -24,17 +24,14 @@ export async function apiRequest(
 }
 
 type UnauthorizedBehavior = "returnNull" | "throw";
-export const getQueryFn: <T>(options: {
-  on401: UnauthorizedBehavior;
-}) => QueryFunction<T> =
-  ({ on401: unauthorizedBehavior }) =>
-  async ({ queryKey }) => {
+export function getQueryFn<TData>(options: { on401: UnauthorizedBehavior }) {
+  const queryFn: QueryFunction<TData> = async ({ queryKey }) => {
     const res = await fetch(queryKey[0] as string, {
       credentials: "include",
     });
 
-    if (unauthorizedBehavior === "returnNull" && res.status === 401) {
-      return null;
+    if (options.on401 === "returnNull" && res.status === 401) {
+      return null as unknown as TData;
     }
 
     await throwIfResNotOk(res);
@@ -42,14 +39,17 @@ export const getQueryFn: <T>(options: {
     
     // التحقق ما إذا كان هيكل الاستجابة يحتوي على حقل user وعلامة نجاح
     if (data.success === true && data.user) {
-      return data.user as unknown as T;
+      return data.user as unknown as TData;
     } else if (data.success === false) {
       throw new Error(data.message || "حدث خطأ غير معروف");
     }
     
     // إرجاع البيانات مباشرة إذا لم تكن بالتنسيق الجديد
-    return data as T;
+    return data as TData;
   };
+  
+  return queryFn;
+}
 
 export const queryClient = new QueryClient({
   defaultOptions: {
