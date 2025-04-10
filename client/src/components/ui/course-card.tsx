@@ -1,7 +1,8 @@
 import { Course } from "@shared/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
+import { useAuth } from "@/hooks/use-auth";
 
 type CourseCardProps = {
   course: Course;
@@ -10,9 +11,17 @@ type CourseCardProps = {
 };
 
 export default function CourseCard({ course, onEnroll, isEnrolling }: CourseCardProps) {
+  const { user } = useAuth();
+  const [, setLocation] = useLocation();
+  
   const formatPrice = (price: number | null) => {
     if (price === null) return "مجاناً";
     return `${price} ريال`;
+  };
+  
+  const handleCourseDetails = (e: React.MouseEvent, courseId: number) => {
+    e.preventDefault();
+    setLocation(`/course-details/${courseId}`);
   };
 
   return (
@@ -42,35 +51,40 @@ export default function CourseCard({ course, onEnroll, isEnrolling }: CourseCard
         <p className="mt-2 text-neutral-600 line-clamp-2">{course.description}</p>
         <div className="mt-4 flex justify-between items-center">
           <span className="text-primary font-bold">{formatPrice(course.price)}</span>
-          {onEnroll ? (
-            <div className="flex space-x-2 space-x-reverse">
-              <Link href={`/course-details/${course.id}`}>
-                <a className="px-3 py-1 bg-white border border-primary text-primary rounded-md hover:bg-primary/5 inline-block">
-                  تفاصيل الدورة
-                </a>
-              </Link>
-              <Button
-                onClick={() => onEnroll(course.id)}
-                disabled={isEnrolling}
-                className="px-3 py-1 bg-primary text-white rounded-md hover:bg-primary/90"
+          <div className="flex space-x-2 space-x-reverse">
+            <button
+              onClick={(e) => handleCourseDetails(e, course.id)}
+              className="px-3 py-1 bg-white border border-primary text-primary rounded-md hover:bg-primary/5"
+            >
+              تفاصيل الدورة
+            </button>
+            
+            {user ? (
+              onEnroll ? (
+                <Button
+                  onClick={() => onEnroll(course.id)}
+                  disabled={isEnrolling}
+                  className="px-3 py-1 bg-primary text-white rounded-md hover:bg-primary/90"
+                >
+                  {isEnrolling ? "جاري التسجيل..." : "التسجيل"}
+                </Button>
+              ) : (
+                <Link 
+                  href={`/course-details/${course.id}`}
+                  className="px-3 py-1 bg-primary text-white rounded-md hover:bg-primary/90 inline-block"
+                >
+                  الدخول للدورة
+                </Link>
+              )
+            ) : (
+              <Link 
+                href={`/auth?redirect=/course/${course.id}`}
+                className="px-3 py-1 bg-primary text-white rounded-md hover:bg-primary/90 inline-block"
               >
-                {isEnrolling ? "جاري التسجيل..." : "التسجيل"}
-              </Button>
-            </div>
-          ) : (
-            <div className="flex space-x-2 space-x-reverse">
-              <Link href={`/course-details/${course.id}`}>
-                <a className="px-3 py-1 bg-white border border-primary text-primary rounded-md hover:bg-primary/5 inline-block">
-                  تفاصيل الدورة
-                </a>
+                التسجيل
               </Link>
-              <Link href={`/auth?redirect=/course/${course.id}`}>
-                <a className="px-3 py-1 bg-primary text-white rounded-md hover:bg-primary/90 inline-block">
-                  التسجيل
-                </a>
-              </Link>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>
