@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { User, BookOpen, Award, Settings, LogOut } from "lucide-react";
 
 type MobileMenuProps = {
   isOpen: boolean;
@@ -33,22 +34,62 @@ export default function MobileMenu({ isOpen, onClose, isLoggedIn, onLogout }: Mo
         <div className="mt-3 space-y-2">
           {isLoggedIn ? (
             <>
+              <div className="border rounded-md p-2 bg-gray-50 mb-3">
+                <Link 
+                  href="/profile"
+                  className="w-full flex items-center px-4 py-2 rounded-md text-sm font-medium text-neutral-700 hover:bg-neutral-100 hover:text-primary"
+                  onClick={onClose}
+                >
+                  <User className="ml-2 h-5 w-5" />
+                  معلومات الحساب
+                </Link>
+                
+                <Link 
+                  href="/dashboard"
+                  className="w-full flex items-center px-4 py-2 rounded-md text-sm font-medium text-neutral-700 hover:bg-neutral-100 hover:text-primary"
+                  onClick={onClose}
+                >
+                  <BookOpen className="ml-2 h-5 w-5" />
+                  دوراتي
+                </Link>
+                
+                <Link 
+                  href="/dashboard?tab=certificates"
+                  className="w-full flex items-center px-4 py-2 rounded-md text-sm font-medium text-neutral-700 hover:bg-neutral-100 hover:text-primary"
+                  onClick={onClose}
+                >
+                  <Award className="ml-2 h-5 w-5" />
+                  شهاداتي
+                </Link>
+                
+                <Link 
+                  href="/profile?tab=security"
+                  className="w-full flex items-center px-4 py-2 rounded-md text-sm font-medium text-neutral-700 hover:bg-neutral-100 hover:text-primary"
+                  onClick={onClose}
+                >
+                  <Settings className="ml-2 h-5 w-5" />
+                  إعدادات الأمان
+                </Link>
+              </div>
+              
               <Link 
                 href="/dashboard"
-                className="w-full flex justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                className="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                 onClick={onClose}
               >
-                لوحة التحكم
+                <BookOpen className="ml-2 h-5 w-5" />
+                إستكمال الدورات
               </Link>
+              
               <Button
                 variant="outline"
                 onClick={() => {
                   onLogout();
                   onClose();
                 }}
-                className="w-full text-neutral-700 hover:text-red-600 hover:border-red-600"
+                className="w-full flex justify-center items-center text-red-600 hover:text-red-700 hover:border-red-600 hover:bg-red-50"
               >
-                <i className="fas fa-sign-out-alt ml-2"></i>
+                <LogOut className="ml-2 h-5 w-5" />
                 تسجيل الخروج
               </Button>
             </>
