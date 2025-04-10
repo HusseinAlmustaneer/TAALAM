@@ -38,7 +38,17 @@ export const getQueryFn: <T>(options: {
     }
 
     await throwIfResNotOk(res);
-    return await res.json();
+    const data = await res.json();
+    
+    // التحقق ما إذا كان هيكل الاستجابة يحتوي على حقل user وعلامة نجاح
+    if (data.success === true && data.user) {
+      return data.user as unknown as T;
+    } else if (data.success === false) {
+      throw new Error(data.message || "حدث خطأ غير معروف");
+    }
+    
+    // إرجاع البيانات مباشرة إذا لم تكن بالتنسيق الجديد
+    return data as T;
   };
 
 export const queryClient = new QueryClient({

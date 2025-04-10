@@ -206,11 +206,20 @@ export function setupAuth(app: Express) {
 
   app.get("/api/user", (req, res) => {
     if (!req.isAuthenticated()) {
-      return res.status(401).json({ message: "غير مصرح" });
+      console.log("Unauthenticated request to /api/user");
+      return res.status(401).json({ 
+        success: false,
+        message: "غير مصرح" 
+      });
     }
     
-    // Remove password from response
+    // إزالة كلمة المرور من الاستجابة
     const { password, ...userWithoutPassword } = req.user as SelectUser;
-    res.json(userWithoutPassword);
+    console.log(`User data requested for ${userWithoutPassword.username}`);
+    
+    res.json({
+      success: true,
+      user: userWithoutPassword
+    });
   });
 }
