@@ -1,7 +1,8 @@
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import "./index.css";
+import "./css/main.css";
+import "./css/certificate.css";
 
-// Note: The document direction, language, and font imports are set in index.html
+// لاحظ: تم تعيين اتجاه المستند واللغة واستيرادات الخطوط في ملف index.html
 
 createRoot(document.getElementById("root")!).render(<App />);

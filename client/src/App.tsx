@@ -10,6 +10,8 @@ import CoursePage from "@/pages/course-page";
 import CertificatePage from "@/pages/certificate-page";
 import { AuthProvider } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/lib/protected-route";
+// استيراد مكون مبدل اللغة
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
 
 function Router() {
   return (
