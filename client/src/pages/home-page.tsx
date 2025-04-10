@@ -122,14 +122,32 @@ export default function HomePage() {
                   )}
                 </div>
               </div>
-              <div className="mt-10 lg:mt-0 lg:w-1/2">
-                <img 
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" 
-                  alt="طلاب يتعلمون عبر الإنترنت" 
-                  className="rounded-lg shadow-xl" 
-                  width="600" 
-                  height="400"
-                />
+              <div className="mt-10 lg:mt-0 lg:w-1/2 relative">
+                {/* خلفية متحركة للصورة */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-blue-500/20 rounded-lg animate-gradient"></div>
+                
+                {/* ديكور متحرك */}
+                <div className="absolute -top-6 -right-6 w-20 h-20 bg-primary/10 rounded-full animate-float"></div>
+                <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-blue-600/10 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
+                
+                {/* شبكة خلفية متحركة */}
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzYjgyZjYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptNiA2djZoNnYtNmgtNnptLTEyIDBoNnY2aC02di02em0wIDE4aDZ2NmgtNnYtNnptNjAgMGg2djZoLTZ2LTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] rounded-lg animate-pulse-slow"></div>
+                
+                {/* الصورة */}
+                <div className="relative z-10">
+                  <img 
+                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" 
+                    alt="طلاب يتعلمون عبر الإنترنت" 
+                    className="rounded-lg shadow-xl animate-float" 
+                    width="600" 
+                    height="400"
+                    style={{ animationDelay: '0.5s' }}
+                  />
+                </div>
+                
+                {/* عناصر زخرفية متحركة */}
+                <div className="absolute top-1/4 -right-3 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full animate-float" style={{ animationDelay: '1.5s', opacity: 0.7 }}></div>
+                <div className="absolute bottom-1/4 -left-3 w-8 h-8 bg-gradient-to-br from-primary to-blue-600 rounded-full animate-float" style={{ animationDelay: '2s', opacity: 0.7 }}></div>
               </div>
             </div>
           </div>
