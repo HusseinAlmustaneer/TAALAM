@@ -68,10 +68,20 @@ export default function CourseDetailsPage() {
   const handleEnrollClick = () => {
     if (!user) {
       // إذا لم يكن المستخدم مسجل دخول، قم بتوجيهه إلى صفحة تسجيل الدخول
-      setLocation(`/auth?redirect=/course/${courseId}`);
+      setLocation(`/auth?redirect=/course-details/${courseId}`);
+      return;
+    }
+    
+    // التحقق مما إذا كانت الدورة مدفوعة أم مجانية
+    if (course?.price && course.price > 0) {
+      // إذا كانت الدورة مدفوعة، قم بتوجيه المستخدم إلى صفحة الدفع
+      setLocation(`/checkout/${courseId}`);
     } else {
-      // المستخدم مسجل دخول، قم بتنفيذ التسجيل في الدورة
-      enrollMutation.mutate();
+      // إذا كانت الدورة مجانية، قم بالتسجيل مباشرة
+      // عرض مربع تأكيد قبل التسجيل
+      if (confirm("هل أنت متأكد من رغبتك في التسجيل في هذه الدورة المجانية؟")) {
+        enrollMutation.mutate();
+      }
     }
   };
 
