@@ -43,19 +43,33 @@ export default function CourseCard({ course, onEnroll, isEnrolling }: CourseCard
         <div className="mt-4 flex justify-between items-center">
           <span className="text-primary font-bold">{formatPrice(course.price)}</span>
           {onEnroll ? (
-            <Button
-              onClick={() => onEnroll(course.id)}
-              disabled={isEnrolling}
-              className="px-3 py-1 bg-primary text-white rounded-md hover:bg-primary/90"
-            >
-              {isEnrolling ? "جاري التسجيل..." : "التسجيل"}
-            </Button>
+            <div className="flex space-x-2 space-x-reverse">
+              <Link href={`/course-details/${course.id}`}>
+                <a className="px-3 py-1 bg-white border border-primary text-primary rounded-md hover:bg-primary/5 inline-block">
+                  تفاصيل الدورة
+                </a>
+              </Link>
+              <Button
+                onClick={() => onEnroll(course.id)}
+                disabled={isEnrolling}
+                className="px-3 py-1 bg-primary text-white rounded-md hover:bg-primary/90"
+              >
+                {isEnrolling ? "جاري التسجيل..." : "التسجيل"}
+              </Button>
+            </div>
           ) : (
-            <Link href={`/course/${course.id}`}>
-              <a className="px-3 py-1 bg-primary text-white rounded-md hover:bg-primary/90 inline-block">
-                عرض الدورة
-              </a>
-            </Link>
+            <div className="flex space-x-2 space-x-reverse">
+              <Link href={`/course-details/${course.id}`}>
+                <a className="px-3 py-1 bg-white border border-primary text-primary rounded-md hover:bg-primary/5 inline-block">
+                  تفاصيل الدورة
+                </a>
+              </Link>
+              <Link href={`/auth?redirect=/course/${course.id}`}>
+                <a className="px-3 py-1 bg-primary text-white rounded-md hover:bg-primary/90 inline-block">
+                  التسجيل
+                </a>
+              </Link>
+            </div>
           )}
         </div>
       </CardContent>

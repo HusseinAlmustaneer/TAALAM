@@ -1,4 +1,4 @@
-import { Link, useParams } from "wouter";
+import { Link, useRoute } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Course } from "@shared/schema";
 import Header from "@/components/layout/header";
@@ -6,8 +6,8 @@ import Footer from "@/components/layout/footer";
 import { Loader2 } from "lucide-react";
 
 export default function CourseDetailsPage() {
-  const [, params] = useParams();
-  const courseId = parseInt(params.id);
+  const [, params] = useRoute("/course-details/:id");
+  const courseId = params ? parseInt(params.id) : 0;
 
   const {
     data: course,

@@ -20,7 +20,7 @@ export default function MobileMenu({ isOpen, onClose, isLoggedIn, onLogout }: Mo
           className="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-primary hover:bg-neutral-100"
           onClick={onClose}
         >
-          الرئيسية
+          الرأيسية
         </Link>
         <Link 
           href="/courses" 

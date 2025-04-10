@@ -38,7 +38,7 @@ export default function Header() {
                 href="/" 
                 className={`${location === "/" ? "text-primary" : "text-neutral-700 hover:text-primary"} px-3 py-2 text-sm font-medium`}
               >
-                الرئيسية
+                الرأيسية
               </Link>
               <Link href="/courses" className="text-neutral-700 hover:text-primary px-3 py-2 text-sm font-medium">
                 الدورات

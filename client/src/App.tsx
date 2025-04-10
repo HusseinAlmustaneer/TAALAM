@@ -8,6 +8,7 @@ import HomePage from "@/pages/home-page";
 import AuthPage from "@/pages/auth-page";
 import DashboardPage from "@/pages/dashboard-page";
 import CoursePage from "@/pages/course-page";
+import CourseDetailsPage from "@/pages/course-details-page";
 import CertificatePage from "@/pages/certificate-page";
 import { AuthProvider } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/lib/protected-route";
@@ -528,6 +529,7 @@ function Router() {
       <ProtectedRoute path="/certificate/:id" component={CertificatePage} />
       <ProtectedRoute path="/profile" component={ProfilePage} />
       <Route path="/courses" component={CoursesPage} />
+      <Route path="/course-details/:id" component={CourseDetailsPage} />
       <Route path="/about" component={AboutPage} />
       <Route path="/contact" component={ContactPage} />
       <Route component={NotFound} />

@@ -36,7 +36,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link href="/" className="text-neutral-400 hover:text-white">
-                  الرئيسية
+                  الرأيسية
                 </Link>
               </li>
               <li>
