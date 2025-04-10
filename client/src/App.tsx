@@ -10,6 +10,7 @@ import DashboardPage from "@/pages/dashboard-page";
 import CoursePage from "@/pages/course-page";
 import CourseDetailsPage from "@/pages/course-details-page";
 import CertificatePage from "@/pages/certificate-page";
+import CoursesListPage from "@/pages/courses-list-page";
 import { AuthProvider } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/lib/protected-route";
 // استيراد مكون مبدل اللغة
@@ -22,132 +23,6 @@ import ProfilePage from "@/pages/profile-page";
 // استيراد مكونات الهيدر والفوتر
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-
-// صفحات مؤقتة
-const CoursesPage = () => {
-  const { data: courses = [], isLoading } = useQuery<Course[]>({
-    queryKey: ['/api/courses'],
-    queryFn: getQueryFn({ on401: 'throw' }),
-  });
-
-  return (
-    <>
-      <Header />
-      <main className="py-12 bg-neutral-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">دوراتنا التدريبية</h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              نقدم مجموعة متنوعة من الدورات التدريبية المصممة خصيصًا لتلبية احتياجات المتعلمين باللغة العربية
-            </p>
-          </div>
-
-          {/* أقسام الدورات */}
-          <div className="mb-12">
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <button className="px-6 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors">
-                جميع الدورات
-              </button>
-              <button className="px-6 py-2 bg-white text-gray-700 rounded-full hover:bg-neutral-100 transition-colors">
-                البرمجة
-              </button>
-              <button className="px-6 py-2 bg-white text-gray-700 rounded-full hover:bg-neutral-100 transition-colors">
-                التصميم
-              </button>
-              <button className="px-6 py-2 bg-white text-gray-700 rounded-full hover:bg-neutral-100 transition-colors">
-                إدارة الأعمال
-              </button>
-              <button className="px-6 py-2 bg-white text-gray-700 rounded-full hover:bg-neutral-100 transition-colors">
-                اللغات
-              </button>
-            </div>
-          </div>
-
-          {/* قائمة الدورات */}
-          {isLoading ? (
-            <div className="flex justify-center items-center py-20">
-              <Loader2 className="h-12 w-12 animate-spin text-primary" />
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {courses && courses.map((course) => (
-                <div key={course.id} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105 hover:shadow-lg">
-                  <div className="h-48 overflow-hidden">
-                    <img 
-                      src={course.imageUrl} 
-                      alt={course.title} 
-                      className="w-full h-full object-cover transition-transform hover:scale-110" 
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                        {course.category}
-                      </span>
-                      <span className="text-gray-600 text-sm">
-                        {course.duration} ساعة
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">{course.title}</h3>
-                    <p className="text-gray-600 mb-4 line-clamp-3">{course.description}</p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-primary font-bold text-lg">
-                        {course.price ? `${course.price} ريال` : 'مجاني'}
-                      </span>
-                      <div className="flex space-x-2 space-x-reverse mt-3">
-                        <a 
-                          href={`/course-details/${course.id}`} 
-                          className="px-3 py-2 bg-white border border-primary text-primary rounded-md hover:bg-primary/5 transition-colors"
-                        >
-                          تفاصيل الدورة
-                        </a>
-                        <a 
-                          href={`/auth?redirect=/course/${course.id}`} 
-                          className="px-3 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
-                        >
-                          الاشتراك الآن
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* استدعاء للعمل */}
-          <div className="mt-16 bg-gradient-to-r from-primary/90 to-primary rounded-xl shadow-lg overflow-hidden">
-            <div className="px-6 py-12 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center justify-between">
-              <div className="text-center lg:text-right mb-8 lg:mb-0">
-                <h2 className="text-3xl font-bold text-white mb-4">
-                  ابدأ رحلة التعلم اليوم
-                </h2>
-                <p className="text-white/90 text-lg max-w-2xl">
-                  انضم إلى الآلاف من المتعلمين واحصل على شهادات معتمدة في مختلف المجالات
-                </p>
-              </div>
-              <div className="flex space-x-4 space-x-reverse">
-                <a 
-                  href="/auth" 
-                  className="px-6 py-3 bg-white text-primary font-medium rounded-md hover:bg-neutral-100 transition-colors shadow-sm"
-                >
-                  تسجيل الدخول
-                </a>
-                <a 
-                  href="/auth?tab=register" 
-                  className="px-6 py-3 bg-white/10 text-white font-medium rounded-md border border-white/30 hover:bg-white/20 transition-colors"
-                >
-                  إنشاء حساب جديد
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </>
-  );
-};
 
 const AboutPage = () => (
   <>
@@ -528,7 +403,7 @@ function Router() {
       <ProtectedRoute path="/course/:id" component={CoursePage} />
       <ProtectedRoute path="/certificate/:id" component={CertificatePage} />
       <ProtectedRoute path="/profile" component={ProfilePage} />
-      <Route path="/courses" component={CoursesPage} />
+      <Route path="/courses" component={CoursesListPage} />
       <Route path="/course-details/:id" component={CourseDetailsPage} />
       <Route path="/about" component={AboutPage} />
       <Route path="/contact" component={ContactPage} />

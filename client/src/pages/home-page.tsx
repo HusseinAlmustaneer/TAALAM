@@ -202,7 +202,10 @@ export default function HomePage() {
             </div>
 
             <div className="mt-10 text-center">
-              <Button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90">
+              <Button 
+                onClick={() => setLocation("/courses")}
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90"
+              >
                 عرض جميع الدورات
                 <i className="fas fa-arrow-left mr-2"></i>
               </Button>

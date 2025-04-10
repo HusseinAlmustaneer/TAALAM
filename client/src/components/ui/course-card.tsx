@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
+import { useQuery } from "@tanstack/react-query";
 
 type CourseCardProps = {
   course: Course;
@@ -13,6 +14,15 @@ type CourseCardProps = {
 export default function CourseCard({ course, onEnroll, isEnrolling }: CourseCardProps) {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
+  
+  // التحقق من وجود اشتراك للمستخدم في هذه الدورة
+  const { data: enrollments } = useQuery<{userId: number; courseId: number; id: number; progress: number}[]>({
+    queryKey: ["/api/enrollments"],
+    enabled: !!user, // تعطيل الاستعلام إذا لم يكن المستخدم مسجل دخول
+  });
+
+  // التحقق من وجود اشتراك في الدورة الحالية
+  const isEnrolled = enrollments?.some((enrollment) => enrollment.courseId === course.id) || false;
   
   const formatPrice = (price: number | null) => {
     if (price === null) return "مجاناً";
@@ -60,7 +70,14 @@ export default function CourseCard({ course, onEnroll, isEnrolling }: CourseCard
             </button>
             
             {user ? (
-              onEnroll ? (
+              isEnrolled ? (
+                <Link 
+                  href={`/course/${course.id}`}
+                  className="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 inline-flex items-center"
+                >
+                  <span className="ml-1">&#10003;</span> مسجل بالفعل
+                </Link>
+              ) : onEnroll ? (
                 <Button
                   onClick={() => onEnroll(course.id)}
                   disabled={isEnrolling}
