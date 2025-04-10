@@ -14,10 +14,12 @@ export default function MobileMenu({ isOpen, onClose, isLoggedIn, onLogout }: Mo
   return (
     <div className="md:hidden" id="mobile-menu">
       <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        <Link href="/">
-          <a onClick={onClose} className="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-primary hover:bg-neutral-100">
-            الرئيسية
-          </a>
+        <Link 
+          href="/" 
+          className="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-primary hover:bg-neutral-100"
+          onClick={onClose}
+        >
+          الرئيسية
         </Link>
         <a href="/#courses" onClick={onClose} className="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-primary hover:bg-neutral-100">
           الدورات
@@ -31,10 +33,12 @@ export default function MobileMenu({ isOpen, onClose, isLoggedIn, onLogout }: Mo
         <div className="mt-3 space-y-2">
           {isLoggedIn ? (
             <>
-              <Link href="/dashboard">
-                <a onClick={onClose} className="w-full flex justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                  لوحة التحكم
-                </a>
+              <Link 
+                href="/dashboard"
+                className="w-full flex justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                onClick={onClose}
+              >
+                لوحة التحكم
               </Link>
               <Button
                 variant="outline"
@@ -50,10 +54,12 @@ export default function MobileMenu({ isOpen, onClose, isLoggedIn, onLogout }: Mo
             </>
           ) : (
             <>
-              <Link href="/auth">
-                <a onClick={onClose} className="w-full flex justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-primary bg-white hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                  تسجيل الدخول
-                </a>
+              <Link 
+                href="/auth"
+                className="w-full flex justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-primary bg-white hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                onClick={onClose}
+              >
+                تسجيل الدخول
               </Link>
               <Link href="/auth?tab=register">
                 <a onClick={onClose} className="w-full flex justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">

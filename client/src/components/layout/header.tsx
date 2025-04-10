@@ -22,14 +22,15 @@ export default function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link href="/">
-              <a className="flex-shrink-0 text-primary font-bold text-2xl">تعلّم</a>
+            <Link href="/" className="flex-shrink-0 text-primary font-bold text-2xl">
+              تعلّم
             </Link>
             <nav className="hidden md:mr-10 md:flex md:space-x-8 md:space-x-reverse">
-              <Link href="/">
-                <a className={`${location === "/" ? "text-primary" : "text-neutral-700 hover:text-primary"} px-3 py-2 text-sm font-medium`}>
-                  الرئيسية
-                </a>
+              <Link 
+                href="/" 
+                className={`${location === "/" ? "text-primary" : "text-neutral-700 hover:text-primary"} px-3 py-2 text-sm font-medium`}
+              >
+                الرئيسية
               </Link>
               <a href="/#courses" className="text-neutral-700 hover:text-primary px-3 py-2 text-sm font-medium">
                 الدورات
@@ -45,10 +46,11 @@ export default function Header() {
           <div className="flex items-center">
             {user ? (
               <div className="hidden md:flex space-x-4 space-x-reverse">
-                <Link href="/dashboard">
-                  <a className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md ${location === "/dashboard" ? "text-white bg-primary" : "text-primary hover:bg-neutral-100"} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary`}>
-                    لوحة التحكم
-                  </a>
+                <Link 
+                  href="/dashboard"
+                  className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md ${location === "/dashboard" ? "text-white bg-primary" : "text-primary hover:bg-neutral-100"} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary`}
+                >
+                  لوحة التحكم
                 </Link>
                 <Button
                   variant="outline"
@@ -71,15 +73,17 @@ export default function Header() {
               </div>
             ) : (
               <div className="hidden md:flex space-x-4 space-x-reverse">
-                <Link href="/auth">
-                  <a className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                    تسجيل الدخول
-                  </a>
+                <Link 
+                  href="/auth"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                >
+                  تسجيل الدخول
                 </Link>
-                <Link href="/auth?tab=register">
-                  <a className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                    إنشاء حساب
-                  </a>
+                <Link 
+                  href="/auth?tab=register"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                >
+                  إنشاء حساب
                 </Link>
               </div>
             )}
