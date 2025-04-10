@@ -24,188 +24,200 @@ import ProfilePage from "@/pages/profile-page";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 
-const AboutPage = () => (
-  <>
-    <Header />
-    <main className="bg-neutral-50">
-      {/* قسم الشعار والمقدمة */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-primary/10 z-0"></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl font-bold mb-8">
-              <span className="text-primary">تَعلّم</span> - منصة تعليمية متكاملة باللغة العربية
-            </h1>
-            <p className="text-xl text-gray-700 leading-relaxed mb-10">
-              نسعى في منصة تعلّم إلى توفير محتوى تعليمي عربي أصيل وعالي الجودة، يلبي احتياجات المتعلمين في مختلف المجالات ويساعدهم على تطوير مهاراتهم وتحقيق أهدافهم المهنية والشخصية.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* قسم رؤيتنا */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-6 text-gray-900">رؤيتنا <span className="text-primary">وقيمنا</span></h2>
-              <p className="text-gray-700 mb-6 text-lg">
-                نسعى لأن نكون المنصة التعليمية الرائدة في العالم العربي، وأن نساهم في سد الفجوة المعرفية من خلال توفير محتوى تعليمي عربي أصيل وعالي الجودة.
+const AboutPage = () => {
+  const { user } = useAuth();
+  
+  return (
+    <>
+      <Header />
+      <main className="bg-neutral-50">
+        {/* قسم الشعار والمقدمة */}
+        <section className="relative py-20 overflow-hidden">
+          <div className="absolute inset-0 bg-primary/10 z-0"></div>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="text-5xl font-bold mb-8">
+                <span className="text-primary">تَعلّم</span> - منصة تعليمية متكاملة باللغة العربية
+              </h1>
+              <p className="text-xl text-gray-700 leading-relaxed mb-10">
+                نسعى في منصة تعلّم إلى توفير محتوى تعليمي عربي أصيل وعالي الجودة، يلبي احتياجات المتعلمين في مختلف المجالات ويساعدهم على تطوير مهاراتهم وتحقيق أهدافهم المهنية والشخصية.
               </p>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-primary/10 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M16 13H8"></path><path d="M16 17H8"></path><path d="M10 9H8"></path></svg>
-                  </div>
-                  <div className="ms-4">
-                    <h3 className="text-lg font-semibold mb-1">التميز الأكاديمي</h3>
-                    <p className="text-gray-600">نلتزم بتقديم محتوى تعليمي عالي الجودة يتوافق مع أحدث المعايير التعليمية العالمية.</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-primary/10 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                  </div>
-                  <div className="ms-4">
-                    <h3 className="text-lg font-semibold mb-1">الإبتكار المستمر</h3>
-                    <p className="text-gray-600">نسعى دائمًا لتطوير منصتنا وتحسين تجربة المستخدم من خلال تبني أحدث التقنيات والمنهجيات التعليمية.</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-primary/10 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                  </div>
-                  <div className="ms-4">
-                    <h3 className="text-lg font-semibold mb-1">التعلم للجميع</h3>
-                    <p className="text-gray-600">نؤمن بأن التعليم حق للجميع، ونعمل على توفير فرص تعليمية متكافئة لجميع شرائح المجتمع.</p>
-                  </div>
-                </div>
-              </div>
             </div>
-            <div className="bg-white rounded-xl shadow-lg p-8 relative">
-              <div className="absolute top-0 left-0 w-20 h-20 bg-primary/10 rounded-br-3xl -translate-y-8 -translate-x-8 z-0"></div>
-              <div className="absolute bottom-0 right-0 w-20 h-20 bg-primary/10 rounded-tl-3xl translate-y-8 translate-x-8 z-0"></div>
-              <div className="relative z-10">
-                <h3 className="text-2xl font-bold mb-6 text-center">أرقام <span className="text-primary">وإحصائيات</span></h3>
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-primary mb-2">+20,000</div>
-                    <p className="text-gray-600">متعلم مسجل</p>
+          </div>
+        </section>
+
+        {/* قسم رؤيتنا */}
+        <section className="py-20">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 className="text-3xl font-bold mb-6 text-gray-900">رؤيتنا <span className="text-primary">وقيمنا</span></h2>
+                <p className="text-gray-700 mb-6 text-lg">
+                  نسعى لأن نكون المنصة التعليمية الرائدة في العالم العربي، وأن نساهم في سد الفجوة المعرفية من خلال توفير محتوى تعليمي عربي أصيل وعالي الجودة.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 bg-primary/10 p-3 rounded-full">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M16 13H8"></path><path d="M16 17H8"></path><path d="M10 9H8"></path></svg>
+                    </div>
+                    <div className="ms-4">
+                      <h3 className="text-lg font-semibold mb-1">التميز الأكاديمي</h3>
+                      <p className="text-gray-600">نلتزم بتقديم محتوى تعليمي عالي الجودة يتوافق مع أحدث المعايير التعليمية العالمية.</p>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-primary mb-2">+50</div>
-                    <p className="text-gray-600">دورة تدريبية</p>
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 bg-primary/10 p-3 rounded-full">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </div>
+                    <div className="ms-4">
+                      <h3 className="text-lg font-semibold mb-1">الإبتكار المستمر</h3>
+                      <p className="text-gray-600">نسعى دائمًا لتطوير منصتنا وتحسين تجربة المستخدم من خلال تبني أحدث التقنيات والمنهجيات التعليمية.</p>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-primary mb-2">+30</div>
-                    <p className="text-gray-600">مدرب محترف</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-primary mb-2">+5000</div>
-                    <p className="text-gray-600">شهادة صادرة</p>
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 bg-primary/10 p-3 rounded-full">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <div className="ms-4">
+                      <h3 className="text-lg font-semibold mb-1">التعلم للجميع</h3>
+                      <p className="text-gray-600">نؤمن بأن التعليم حق للجميع، ونعمل على توفير فرص تعليمية متكافئة لجميع شرائح المجتمع.</p>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div className="bg-white rounded-xl shadow-lg p-8 relative">
+                <div className="absolute top-0 left-0 w-20 h-20 bg-primary/10 rounded-br-3xl -translate-y-8 -translate-x-8 z-0"></div>
+                <div className="absolute bottom-0 right-0 w-20 h-20 bg-primary/10 rounded-tl-3xl translate-y-8 translate-x-8 z-0"></div>
+                <div className="relative z-10">
+                  <h3 className="text-2xl font-bold mb-6 text-center">أرقام <span className="text-primary">وإحصائيات</span></h3>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-primary mb-2">+20,000</div>
+                      <p className="text-gray-600">متعلم مسجل</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-primary mb-2">+50</div>
+                      <p className="text-gray-600">دورة تدريبية</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-primary mb-2">+30</div>
+                      <p className="text-gray-600">مدرب محترف</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-primary mb-2">+5000</div>
+                      <p className="text-gray-600">شهادة صادرة</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* قسم ميزات المنصة */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6">ميزات <span className="text-primary">منصة تَعلّم</span></h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-              نوفر العديد من الميزات التي تجعل رحلة التعلم أكثر متعة وفعالية
-            </p>
+        {/* قسم ميزات المنصة */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-6">ميزات <span className="text-primary">منصة تَعلّم</span></h2>
+              <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+                نوفر العديد من الميزات التي تجعل رحلة التعلم أكثر متعة وفعالية
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
+                <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M15 18h-5"></path><path d="M10 6h8v4h-8V6Z"></path></svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3">محتوى تعليمي متنوع</h3>
+                <p className="text-gray-600">
+                  نقدم مجموعة واسعة من الدورات التدريبية في مختلف المجالات، بدءًا من البرمجة وتطوير الويب وحتى تعلم اللغات وإدارة الأعمال.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
+                <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M5.5 20H8M12 10v4m-3.5 6h7a5 5 0 0 0 5-5c0-2-3-8-3-8H5s-3 6-3 8a5 5 0 0 0 5 5Z"></path><path d="M9 10V6a3 3 0 0 1 5.83-1"></path></svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3">خبراء ومدربون محترفون</h3>
+                <p className="text-gray-600">
+                  يقوم بتقديم الدورات نخبة من الخبراء والمدربين المحترفين الذين يمتلكون خبرة عملية واسعة في مجالاتهم.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
+                <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M12 8v4l3 3"></path><circle cx="12" cy="12" r="10"></circle></svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3">تعلم بالسرعة المناسبة لك</h3>
+                <p className="text-gray-600">
+                  يمكنك التعلم وفقًا لجدولك الزمني الخاص، والتقدم في الدورات بالسرعة التي تناسبك.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
+                <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M22 9.5v5c0 2.5-2 4.5-4.5 4.5h-5A9 9 0 0 1 3.17 5.17A9 9 0 0 1 12.5 2h5A4.5 4.5 0 0 1 22 6.5v3"></path><path d="M15 5h.01"></path><path d="M18 5h.01"></path><path d="m14 12-6 6"></path><path d="m15 18-6-6 3-3 6 6"></path></svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3">تطبيقات عملية</h3>
+                <p className="text-gray-600">
+                  نركز على الجانب العملي في التعليم من خلال مشاريع ومهام تطبيقية تساعدك على ترسيخ المفاهيم وتطوير مهاراتك العملية.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
+                <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3">شهادات معتمدة</h3>
+                <p className="text-gray-600">
+                  بعد إتمام الدورة بنجاح، تحصل على شهادة معتمدة يمكنك إضافتها إلى سيرتك الذاتية وملفك المهني.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
+                <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5Z"></path><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"></path></svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3">دعم ومساعدة مستمرة</h3>
+                <p className="text-gray-600">
+                  نوفر دعمًا فنيًا وأكاديميًا على مدار الساعة للإجابة على أسئلتك واستفساراتك.
+                </p>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M15 18h-5"></path><path d="M10 6h8v4h-8V6Z"></path></svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">محتوى تعليمي متنوع</h3>
-              <p className="text-gray-600">
-                نقدم مجموعة واسعة من الدورات التدريبية في مختلف المجالات، بدءًا من البرمجة وتطوير الويب وحتى تعلم اللغات وإدارة الأعمال.
+        {/* قسم الدعوة للتسجيل - يظهر فقط للمستخدمين غير المسجلين */}
+        {!user && (
+          <section className="py-20 bg-gradient-to-r from-primary/90 to-primary text-white">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <h2 className="text-3xl font-bold mb-6">ابدأ رحلة التعلم مع منصة تَعلّم</h2>
+              <p className="text-xl mb-10 max-w-3xl mx-auto">
+                انضم إلى الآلاف من المتعلمين واكتسب المهارات التي تحتاجها لتطوير مسارك المهني
               </p>
-            </div>
-
-            <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M5.5 20H8M12 10v4m-3.5 6h7a5 5 0 0 0 5-5c0-2-3-8-3-8H5s-3 6-3 8a5 5 0 0 0 5 5Z"></path><path d="M9 10V6a3 3 0 0 1 5.83-1"></path></svg>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link 
+                  href="/auth" 
+                  className="px-8 py-3 bg-white text-primary font-bold rounded-md hover:bg-neutral-100 transition-colors"
+                >
+                  تسجيل الدخول
+                </Link>
+                <Link 
+                  href="/auth?tab=register" 
+                  className="px-8 py-3 bg-transparent border-2 border-white text-white font-bold rounded-md hover:bg-white/10 transition-colors"
+                >
+                  إنشاء حساب جديد
+                </Link>
               </div>
-              <h3 className="text-xl font-bold mb-3">خبراء ومدربون محترفون</h3>
-              <p className="text-gray-600">
-                يقوم بتقديم الدورات نخبة من الخبراء والمدربين المحترفين الذين يمتلكون خبرة عملية واسعة في مجالاتهم.
-              </p>
             </div>
-
-            <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M12 8v4l3 3"></path><circle cx="12" cy="12" r="10"></circle></svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">تعلم بالسرعة المناسبة لك</h3>
-              <p className="text-gray-600">
-                يمكنك التعلم وفقًا لجدولك الزمني الخاص، والتقدم في الدورات بالسرعة التي تناسبك.
-              </p>
-            </div>
-
-            <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M22 9.5v5c0 2.5-2 4.5-4.5 4.5h-5A9 9 0 0 1 3.17 5.17A9 9 0 0 1 12.5 2h5A4.5 4.5 0 0 1 22 6.5v3"></path><path d="M15 5h.01"></path><path d="M18 5h.01"></path><path d="m14 12-6 6"></path><path d="m15 18-6-6 3-3 6 6"></path></svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">تطبيقات عملية</h3>
-              <p className="text-gray-600">
-                نركز على الجانب العملي في التعليم من خلال مشاريع ومهام تطبيقية تساعدك على ترسيخ المفاهيم وتطوير مهاراتك العملية.
-              </p>
-            </div>
-
-            <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">شهادات معتمدة</h3>
-              <p className="text-gray-600">
-                بعد إتمام الدورة بنجاح، تحصل على شهادة معتمدة يمكنك إضافتها إلى سيرتك الذاتية وملفك المهني.
-              </p>
-            </div>
-
-            <div className="bg-neutral-50 rounded-lg p-8 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-primary"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5Z"></path><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"></path></svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">دعم ومساعدة مستمرة</h3>
-              <p className="text-gray-600">
-                نوفر دعمًا فنيًا وأكاديميًا على مدار الساعة للإجابة على أسئلتك واستفساراتك.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* قسم الدعوة للتسجيل */}
-      <section className="py-20 bg-gradient-to-r from-primary/90 to-primary text-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-6">ابدأ رحلة التعلم مع منصة تَعلّم</h2>
-          <p className="text-xl mb-10 max-w-3xl mx-auto">
-            انضم إلى الآلاف من المتعلمين واكتسب المهارات التي تحتاجها لتطوير مسارك المهني
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/auth" className="px-8 py-3 bg-white text-primary font-bold rounded-md hover:bg-neutral-100 transition-colors">
-              تسجيل الدخول
-            </a>
-            <a href="/auth?tab=register" className="px-8 py-3 bg-transparent border-2 border-white text-white font-bold rounded-md hover:bg-white/10 transition-colors">
-              إنشاء حساب جديد
-            </a>
-          </div>
-        </div>
-      </section>
-    </main>
-    <Footer />
-  </>
-);
+          </section>
+        )}
+      </main>
+      <Footer />
+    </>
+  );
+};
 
 const ContactPage = () => {
   return (

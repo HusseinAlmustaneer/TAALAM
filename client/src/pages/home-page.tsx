@@ -112,12 +112,14 @@ export default function HomePage() {
                   <a href="#courses" className="inline-flex items-center justify-center rounded-md border border-transparent bg-white px-5 py-3 text-base font-medium text-primary hover:bg-blue-50 mb-4 sm:mb-0">
                     استعرض الدورات
                   </a>
-                  <Button
-                    onClick={() => setLocation("/auth?tab=register")}
-                    className="inline-flex items-center justify-center rounded-md border border-white px-5 py-3 text-base font-medium text-white hover:bg-blue-600"
-                  >
-                    سجل مجاناً
-                  </Button>
+                  {!user && (
+                    <Button
+                      onClick={() => setLocation("/auth?tab=register")}
+                      className="inline-flex items-center justify-center rounded-md border border-white px-5 py-3 text-base font-medium text-white hover:bg-blue-600"
+                    >
+                      سجل مجاناً
+                    </Button>
+                  )}
                 </div>
               </div>
               <div className="mt-10 lg:mt-0 lg:w-1/2">
@@ -244,14 +246,16 @@ export default function HomePage() {
                 <p className="mt-3 text-lg text-neutral-300">
                   بعد إكمال كل دورة، ستحصل على شهادة رقمية يمكنك مشاركتها مع أصحاب العمل أو إضافتها إلى سيرتك الذاتية
                 </p>
-                <div className="mt-8">
-                  <Button
-                    onClick={() => setLocation("/auth?tab=register")}
-                    className="inline-flex items-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-neutral-800 bg-white hover:bg-neutral-100"
-                  >
-                    ابدأ التعلم الآن
-                  </Button>
-                </div>
+                {!user && (
+                  <div className="mt-8">
+                    <Button
+                      onClick={() => setLocation("/auth?tab=register")}
+                      className="inline-flex items-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-neutral-800 bg-white hover:bg-neutral-100"
+                    >
+                      ابدأ التعلم الآن
+                    </Button>
+                  </div>
+                )}
               </div>
               <div className="mt-10 lg:mt-0 lg:w-1/2">
                 <CertificateDisplay
