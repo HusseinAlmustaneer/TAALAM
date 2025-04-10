@@ -22,7 +22,8 @@ export default function CourseDetailsPage() {
   });
 
   // التحقق من وجود اشتراك في الدورة الحالية
-  const isEnrolled = enrollments?.some((enrollment) => enrollment.courseId === courseId) || false;
+  const currentEnrollment = enrollments?.find((enrollment) => enrollment.courseId === courseId);
+  const isEnrolled = !!currentEnrollment;
 
   // الحصول على بيانات الدورة
   const {
@@ -243,6 +244,35 @@ export default function CourseDetailsPage() {
                       </button>
                     )}
                   </div>
+                  
+                  {/* قسم تفاصيل التسجيل - يظهر فقط للمستخدمين المسجلين في الدورة */}
+                  {isEnrolled && currentEnrollment && (
+                    <div className="mb-6 p-4 border border-green-200 rounded-lg bg-green-50">
+                      <h3 className="text-lg font-bold text-green-700 mb-2">
+                        أنت مسجل في هذه الدورة
+                      </h3>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">التقدم في الدورة:</span>
+                          <span className="font-semibold">{currentEnrollment.progress}%</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2.5">
+                          <div 
+                            className="bg-green-600 h-2.5 rounded-full" 
+                            style={{ width: `${currentEnrollment.progress}%` }}
+                          ></div>
+                        </div>
+                        <div className="mt-3">
+                          <Link 
+                            href={`/course/${course.id}`}
+                            className="text-green-700 hover:text-green-800 text-sm underline font-medium"
+                          >
+                            استمر في التعلم من حيث توقفت
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="space-y-4 border-t border-gray-200 pt-6">
                     <h3 className="text-lg font-bold mb-4">تفاصيل الدورة</h3>
