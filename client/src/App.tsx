@@ -11,6 +11,7 @@ import CoursePage from "@/pages/course-page";
 import CourseDetailsPage from "@/pages/course-details-page";
 import CertificatePage from "@/pages/certificate-page";
 import CoursesListPage from "@/pages/courses-list-page";
+import CheckoutPage from "@/pages/checkout-page";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/lib/protected-route";
 // استيراد مكون مبدل اللغة
@@ -417,6 +418,7 @@ function Router() {
       <ProtectedRoute path="/profile" component={ProfilePage} />
       <Route path="/courses" component={CoursesListPage} />
       <Route path="/course-details/:id" component={CourseDetailsPage} />
+      <ProtectedRoute path="/checkout/:id" component={CheckoutPage} />
       <Route path="/about" component={AboutPage} />
       <Route path="/contact" component={ContactPage} />
       <Route component={NotFound} />
