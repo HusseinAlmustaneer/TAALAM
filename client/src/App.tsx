@@ -93,12 +93,20 @@ const CoursesPage = () => {
                       <span className="text-primary font-bold text-lg">
                         {course.price ? `${course.price} ريال` : 'مجاني'}
                       </span>
-                      <a 
-                        href={`/auth?redirect=/course/${course.id}`} 
-                        className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
-                      >
-                        الاشتراك الآن
-                      </a>
+                      <div className="flex space-x-2 space-x-reverse mt-3">
+                        <a 
+                          href={`/course-details/${course.id}`} 
+                          className="px-3 py-2 bg-white border border-primary text-primary rounded-md hover:bg-primary/5 transition-colors"
+                        >
+                          تفاصيل الدورة
+                        </a>
+                        <a 
+                          href={`/auth?redirect=/course/${course.id}`} 
+                          className="px-3 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                        >
+                          الاشتراك الآن
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
