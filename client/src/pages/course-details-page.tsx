@@ -1,14 +1,30 @@
-import { Link, useRoute } from "wouter";
-import { useQuery } from "@tanstack/react-query";
+import { Link, useRoute, useLocation } from "wouter";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Course } from "@shared/schema";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { Loader2 } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 export default function CourseDetailsPage() {
   const [, params] = useRoute("/course-details/:id");
   const courseId = params ? parseInt(params.id) : 0;
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
+  // للتحقق من وجود اشتراك للمستخدم في هذه الدورة
+  const { data: enrollments } = useQuery<{userId: number; courseId: number; id: number; progress: number}[]>({
+    queryKey: ["/api/enrollments"],
+    enabled: !!user, // تعطيل الاستعلام إذا لم يكن المستخدم مسجل دخول
+  });
+
+  // التحقق من وجود اشتراك في الدورة الحالية
+  const isEnrolled = enrollments?.some((enrollment) => enrollment.courseId === courseId) || false;
+
+  // الحصول على بيانات الدورة
   const {
     data: course,
     isLoading,
@@ -23,6 +39,41 @@ export default function CourseDetailsPage() {
       return res.json();
     },
   });
+
+  // إنشاء mutation للاشتراك في الدورة
+  const enrollMutation = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("POST", "/api/enrollments", { courseId });
+      return await res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "تم التسجيل بنجاح",
+        description: "تم تسجيلك في الدورة بنجاح",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/enrollments"] });
+      // الانتقال إلى صفحة الدورة بعد التسجيل
+      setLocation(`/course/${courseId}`);
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "فشل التسجيل",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  // وظيفة التعامل مع الضغط على زر التسجيل
+  const handleEnrollClick = () => {
+    if (!user) {
+      // إذا لم يكن المستخدم مسجل دخول، قم بتوجيهه إلى صفحة تسجيل الدخول
+      setLocation(`/auth?redirect=/course/${courseId}`);
+    } else {
+      // المستخدم مسجل دخول، قم بتنفيذ التسجيل في الدورة
+      enrollMutation.mutate();
+    }
+  };
 
   return (
     <>
@@ -156,12 +207,31 @@ export default function CourseDetailsPage() {
                         {course.price ? `${course.price} ريال` : 'مجاني'}
                       </span>
                     </div>
-                    <Link 
-                      href={`/auth?redirect=/course/${course.id}`}
-                      className="block w-full bg-primary text-center text-white font-bold py-3 px-4 rounded-md hover:bg-primary/90 transition-colors"
-                    >
-                      التسجيل في الدورة
-                    </Link>
+                    {user ? (
+                      isEnrolled ? (
+                        <Link 
+                          href={`/course/${course.id}`}
+                          className="block w-full bg-green-600 text-center text-white font-bold py-3 px-4 rounded-md hover:bg-green-700 transition-colors"
+                        >
+                          الذهاب إلى الدورة
+                        </Link>
+                      ) : (
+                        <button 
+                          onClick={handleEnrollClick}
+                          disabled={enrollMutation.isPending}
+                          className="block w-full bg-primary text-center text-white font-bold py-3 px-4 rounded-md hover:bg-primary/90 transition-colors disabled:opacity-70"
+                        >
+                          {enrollMutation.isPending ? 'جاري التسجيل...' : 'التسجيل في الدورة'}
+                        </button>
+                      )
+                    ) : (
+                      <button 
+                        onClick={handleEnrollClick}
+                        className="block w-full bg-primary text-center text-white font-bold py-3 px-4 rounded-md hover:bg-primary/90 transition-colors"
+                      >
+                        التسجيل في الدورة
+                      </button>
+                    )}
                   </div>
 
                   <div className="space-y-4 border-t border-gray-200 pt-6">
