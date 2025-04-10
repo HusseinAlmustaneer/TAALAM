@@ -1,0 +1,101 @@
+{
+  "common": {
+    "appName": "Taallam",
+    "tagline": "Learning platform for the Saudi market",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "loading": "Loading...",
+    "error": "An error occurred!"
+  },
+  "navigation": {
+    "home": "Home",
+    "courses": "Courses",
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy Policy"
+  },
+  "homePage": {
+    "hero": {
+      "title": "Learn new skills and advance your career",
+      "subtitle": "An Arabic learning platform dedicated to the Saudi market, offering specialized training courses with certified certificates",
+      "cta": "Explore Courses"
+    },
+    "features": {
+      "title": "Why choose Taallam?",
+      "content": [
+        {
+          "title": "Arabic Courses",
+          "description": "Quality educational content in Arabic designed specifically for the Arab learner"
+        },
+        {
+          "title": "Verified Certificates",
+          "description": "Get certified digital certificates that can be verified upon completing courses"
+        },
+        {
+          "title": "High Quality Content",
+          "description": "Courses carefully designed by experts in their fields to provide the best learning experience"
+        },
+        {
+          "title": "Learn Anytime",
+          "description": "Unlimited access to courses, learn at your own pace and at a time that suits you"
+        }
+      ]
+    },
+    "categories": {
+      "title": "Explore Course Categories",
+      "viewAll": "View All"
+    }
+  },
+  "auth": {
+    "loginTitle": "Login",
+    "registerTitle": "Create New Account",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "loginButton": "Login",
+    "registerButton": "Register",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?"
+  },
+  "courses": {
+    "enrollButton": "Enroll in Course",
+    "startLearning": "Start Learning",
+    "enrolled": "Enrolled",
+    "completed": "Completed",
+    "price": "Price",
+    "free": "Free",
+    "duration": "Duration",
+    "level": "Level",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "instructor": "Instructor",
+    "description": "Description",
+    "curriculum": "Curriculum",
+    "requirements": "Requirements"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "myLearning": "My Learning",
+    "myCertificates": "My Certificates",
+    "progress": "Progress",
+    "continue": "Continue Learning",
+    "view": "View",
+    "download": "Download"
+  },
+  "certificate": {
+    "title": "Certificate of Completion",
+    "issued": "Issued on",
+    "verify": "Verification Code",
+    "recipient": "This certificate is awarded to",
+    "completion": "for completing the course",
+    "validation": "To verify the authenticity of this certificate, please visit our website and enter the verification code"
+  },
+  "footer": {
+    "rights": "All Rights Reserved",
+    "follow": "Follow Us"
+  }
+}

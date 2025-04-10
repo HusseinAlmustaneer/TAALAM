@@ -1,0 +1,6 @@
+/* Certificate styles */
+.certificate {
+  background-image: linear-gradient(45deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9)), url('https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+  background-size: cover;
+  background-position: center;
+}

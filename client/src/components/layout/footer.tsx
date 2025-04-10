@@ -27,8 +27,8 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">روابط سريعة</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/">
-                  <a className="text-neutral-400 hover:text-white">الرئيسية</a>
+                <Link href="/" className="text-neutral-400 hover:text-white">
+                  الرئيسية
                 </Link>
               </li>
               <li>
