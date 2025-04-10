@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, Link } from "wouter";
 import { queryClient, getQueryFn } from "./lib/queryClient";
 import { QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -11,7 +11,7 @@ import CoursePage from "@/pages/course-page";
 import CourseDetailsPage from "@/pages/course-details-page";
 import CertificatePage from "@/pages/certificate-page";
 import CoursesListPage from "@/pages/courses-list-page";
-import { AuthProvider } from "@/hooks/use-auth";
+import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/lib/protected-route";
 // استيراد مكون مبدل اللغة
 import { LanguageSwitcher } from "@/components/ui/language-switcher";

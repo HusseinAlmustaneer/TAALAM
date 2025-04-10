@@ -269,23 +269,25 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-12 bg-primary">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-2xl font-bold text-white sm:text-3xl">ابدأ رحلة التعلم اليوم</h2>
-            <p className="mt-3 text-lg text-blue-100 mx-auto max-w-2xl">
-              سجل الآن واستفد من الدورات المجانية والمدفوعة المتاحة على منصتنا
-            </p>
-            <div className="mt-8 flex justify-center">
-              <Button
-                onClick={() => setLocation("/auth?tab=register")}
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-white hover:bg-neutral-100 shadow-md"
-              >
-                إنشاء حساب مجاني
-              </Button>
+        {/* CTA - يظهر فقط للمستخدمين غير المسجلين */}
+        {!user && (
+          <section className="py-12 bg-primary">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <h2 className="text-2xl font-bold text-white sm:text-3xl">ابدأ رحلة التعلم اليوم</h2>
+              <p className="mt-3 text-lg text-blue-100 mx-auto max-w-2xl">
+                سجل الآن واستفد من الدورات المجانية والمدفوعة المتاحة على منصتنا
+              </p>
+              <div className="mt-8 flex justify-center">
+                <Button
+                  onClick={() => setLocation("/auth?tab=register")}
+                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-white hover:bg-neutral-100 shadow-md"
+                >
+                  إنشاء حساب مجاني
+                </Button>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </main>
       <Footer />
     </>
