@@ -97,60 +97,57 @@ export default function HomePage() {
     <>
       <Header />
       <main>
-        {/* Hero Section */}
-        <section className="bg-gradient-to-l from-primary to-blue-700 text-white">
-          <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
-            <div className="lg:flex lg:items-center lg:justify-between">
-              <div className="lg:w-1/2">
-                <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-                  طوّر مهاراتك مع دورات قصيرة باللغة العربية
-                </h1>
-                <p className="mt-3 max-w-md text-lg text-blue-100 sm:text-xl">
-                  منصة تعليمية مخصصة للسوق السعودي تقدم دورات تدريبية احترافية مع شهادات معتمدة
-                </p>
-                <div className="mt-8 flex flex-col sm:flex-row sm:space-x-4 sm:space-x-reverse">
-                  <a href="#courses" className="inline-flex items-center justify-center rounded-md border border-transparent bg-white px-5 py-3 text-base font-medium text-primary hover:bg-blue-50 mb-4 sm:mb-0">
-                    استعرض الدورات
-                  </a>
-                  {!user && (
-                    <Button
-                      onClick={() => setLocation("/auth?tab=register")}
-                      className="inline-flex items-center justify-center rounded-md border border-white px-5 py-3 text-base font-medium text-white hover:bg-blue-600"
-                    >
-                      سجل مجاناً
-                    </Button>
-                  )}
-                </div>
-              </div>
-              <div className="mt-10 lg:mt-0 lg:w-1/2 relative">
-                {/* خلفية متحركة للصورة */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-blue-500/20 rounded-lg animate-gradient"></div>
-                
-                {/* ديكور متحرك */}
-                <div className="absolute -top-6 -right-6 w-20 h-20 bg-primary/10 rounded-full animate-float"></div>
-                <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-blue-600/10 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
-                
-                {/* شبكة خلفية متحركة */}
-                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzYjgyZjYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptNiA2djZoNnYtNmgtNnptLTEyIDBoNnY2aC02di02em0wIDE4aDZ2NmgtNnYtNnptNjAgMGg2djZoLTZ2LTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] rounded-lg animate-pulse-slow"></div>
-                
-                {/* الصورة */}
-                <div className="relative z-10">
-                  <img 
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" 
-                    alt="طلاب يتعلمون عبر الإنترنت" 
-                    className="rounded-lg shadow-xl animate-float" 
-                    width="600" 
-                    height="400"
-                    style={{ animationDelay: '0.5s' }}
-                  />
-                </div>
-                
-                {/* عناصر زخرفية متحركة */}
-                <div className="absolute top-1/4 -right-3 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full animate-float" style={{ animationDelay: '1.5s', opacity: 0.7 }}></div>
-                <div className="absolute bottom-1/4 -left-3 w-8 h-8 bg-gradient-to-br from-primary to-blue-600 rounded-full animate-float" style={{ animationDelay: '2s', opacity: 0.7 }}></div>
+        {/* Hero Section with Full Image Background */}
+        <section className="relative min-h-[80vh] flex items-center text-white overflow-hidden animate-gradient">
+          {/* صورة الخلفية */}
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary to-blue-700 opacity-80 animate-pulse-slow"></div>
+            <img 
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" 
+              alt="طلاب يتعلمون عبر الإنترنت"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+          
+          {/* طبقة متحركة فوق الصورة */}
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptNiA2djZoNnYtNmgtNnptLTEyIDBoNnY2aC02di02em0wIDE4aDZ2NmgtNnYtNnptNjAgMGg2djZoLTZ2LTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30 z-10"></div>
+          
+          {/* عناصر زخرفية متحركة */}
+          <div className="absolute top-1/4 right-[10%] w-20 h-20 bg-white rounded-full opacity-10 animate-float z-20"></div>
+          <div className="absolute bottom-1/4 left-[10%] w-32 h-32 bg-white rounded-full opacity-10 animate-float z-20" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-[60%] right-[30%] w-16 h-16 bg-white rounded-full opacity-10 animate-float z-20" style={{ animationDelay: '1.5s' }}></div>
+          <div className="absolute top-[20%] left-[20%] w-24 h-24 bg-white rounded-full opacity-10 animate-float z-20" style={{ animationDelay: '2s' }}></div>
+          
+          {/* المحتوى */}
+          <div className="container relative mx-auto px-4 py-16 sm:px-6 lg:px-8 z-30">
+            <div className="max-w-2xl">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl drop-shadow-lg">
+                طوّر مهاراتك مع دورات قصيرة باللغة العربية
+              </h1>
+              <p className="mt-6 max-w-xl text-xl text-white drop-shadow-lg">
+                منصة تعليمية مخصصة للسوق السعودي تقدم دورات تدريبية احترافية مع شهادات معتمدة
+              </p>
+              <div className="mt-10 flex flex-col sm:flex-row gap-4">
+                <a 
+                  href="#courses" 
+                  className="inline-flex items-center justify-center rounded-md bg-white px-6 py-4 text-lg font-medium text-primary hover:bg-blue-50 transition-colors shadow-lg"
+                >
+                  استعرض الدورات
+                </a>
+                {!user && (
+                  <Button
+                    onClick={() => setLocation("/auth?tab=register")}
+                    className="inline-flex items-center justify-center rounded-md border-2 border-white bg-transparent px-6 py-4 text-lg font-medium text-white hover:bg-white/20 transition-colors shadow-lg"
+                  >
+                    سجل مجاناً
+                  </Button>
+                )}
               </div>
             </div>
           </div>
+          
+          {/* شريط متموج في الأسفل */}
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-r from-primary to-blue-700 skew-y-3 -mb-8 z-20"></div>
         </section>
 
         {/* Features */}
