@@ -31,12 +31,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   } = useQuery<Omit<User, 'password'> | null, Error>({
     queryKey: ["/api/user"],
     queryFn: getQueryFn({ on401: "returnNull" }),
+    initialData: null, // تعيين القيمة الأولية إلى null بدلاً من undefined
   });
 
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginData) => {
       const res = await apiRequest("POST", "/api/login", credentials);
-      return await res.json();
+      const data = await res.json();
+      
+      // التحقق من نجاح العملية
+      if (!data.success && data.message) {
+        throw new Error(data.message);
+      }
+      
+      return data.user;
     },
     onSuccess: (user) => {
       queryClient.setQueryData(["/api/user"], user);
@@ -49,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onError: (error: Error) => {
       toast({
         title: "فشل تسجيل الدخول",
-        description: error.message,
+        description: error.message || "حدث خطأ أثناء تسجيل الدخول، يرجى المحاولة مرة أخرى",
         variant: "destructive",
       });
     },
@@ -58,7 +66,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const registerMutation = useMutation({
     mutationFn: async (credentials: RegisterData) => {
       const res = await apiRequest("POST", "/api/register", credentials);
-      return await res.json();
+      const data = await res.json();
+      
+      // التحقق من نجاح العملية
+      if (!data.success) {
+        if (data.message) {
+          throw new Error(data.message);
+        } else if (data.errors) {
+          // إذا كان هناك أخطاء تحقق متعددة
+          const errorMessage = Object.entries(data.errors)
+            .map(([field, error]: [string, any]) => {
+              if (error._errors && error._errors.length) {
+                return `${field}: ${error._errors[0]}`;
+              }
+              return null;
+            })
+            .filter(Boolean)
+            .join(', ');
+          
+          throw new Error(errorMessage || "حدث خطأ في التحقق من البيانات");
+        }
+        
+        throw new Error("حدث خطأ أثناء إنشاء الحساب");
+      }
+      
+      return data.user;
     },
     onSuccess: (user) => {
       queryClient.setQueryData(["/api/user"], user);
@@ -71,7 +103,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onError: (error: Error) => {
       toast({
         title: "فشل إنشاء الحساب",
-        description: error.message,
+        description: error.message || "حدث خطأ أثناء إنشاء الحساب، يرجى المحاولة مرة أخرى",
         variant: "destructive",
       });
     },

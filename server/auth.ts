@@ -5,8 +5,7 @@ import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
-import { User as SelectUser } from "@shared/schema";
-import { registerSchema } from "@shared/schema";
+import { User as SelectUser, registerSchema, loginSchema } from "@shared/schema";
 import { z } from "zod";
 
 declare global {
@@ -74,62 +73,126 @@ export function setupAuth(app: Express) {
 
   app.post("/api/register", async (req, res, next) => {
     try {
+      console.log("Register request received:", req.body);
+      
+      // التحقق من البيانات باستخدام مخطط التسجيل
       const result = registerSchema.safeParse(req.body);
       if (!result.success) {
-        return res.status(400).json({ errors: result.error.format() });
+        console.log("Validation errors:", result.error.format());
+        return res.status(400).json({ 
+          success: false,
+          errors: result.error.format() 
+        });
       }
 
+      // استخراج البيانات المدخلة بعد التحقق منها
       const { username, email, password, firstName, lastName } = result.data;
+      
+      console.log(`Processing registration for user: ${username}, email: ${email}`);
 
-      // Check if username already exists
+      // التحقق من عدم وجود مستخدم بنفس اسم المستخدم
       const existingUsername = await storage.getUserByUsername(username);
       if (existingUsername) {
+        console.log(`Username ${username} already exists`);
         return res.status(400).json({ 
-          message: "اسم المستخدم موجود بالفعل" 
+          success: false,
+          message: "اسم المستخدم موجود بالفعل",
+          field: "username"
         });
       }
 
-      // Check if email already exists
+      // التحقق من عدم وجود مستخدم بنفس البريد الإلكتروني
       const existingEmail = await storage.getUserByEmail(email);
       if (existingEmail) {
+        console.log(`Email ${email} already exists`);
         return res.status(400).json({ 
-          message: "البريد الإلكتروني مستخدم بالفعل" 
+          success: false,
+          message: "البريد الإلكتروني مستخدم بالفعل",
+          field: "email"
         });
       }
 
+      // تشفير كلمة المرور وإنشاء المستخدم
+      const hashedPassword = await hashPassword(password);
+      console.log("Password hashed, creating user record");
+      
       const user = await storage.createUser({
         username,
         email,
         firstName,
         lastName,
-        password: await hashPassword(password),
+        password: hashedPassword,
       });
 
+      console.log(`User created successfully with ID: ${user.id}`);
+
+      // تسجيل الدخول تلقائيًا بعد إنشاء الحساب
       req.login(user, (err) => {
-        if (err) return next(err);
+        if (err) {
+          console.error("Error during automatic login:", err);
+          return next(err);
+        }
         
-        // Remove password from response
+        // إزالة كلمة المرور من الاستجابة
         const { password, ...userWithoutPassword } = user;
-        res.status(201).json(userWithoutPassword);
+        console.log("Registration complete, user logged in");
+        res.status(201).json({
+          success: true,
+          user: userWithoutPassword
+        });
       });
-    } catch (error) {
-      next(error);
+    } catch (error: any) {
+      console.error("Error during registration:", error);
+      res.status(500).json({ 
+        success: false,
+        message: error.message || "حدث خطأ أثناء إنشاء الحساب"
+      });
     }
   });
 
   app.post("/api/login", (req, res, next) => {
+    console.log("Login request received:", { username: req.body.username });
+    
+    // التحقق من بيانات تسجيل الدخول باستخدام مخطط التحقق
+    const result = loginSchema.safeParse(req.body);
+    if (!result.success) {
+      console.log("Login validation errors:", result.error.format());
+      return res.status(400).json({ 
+        success: false, 
+        errors: result.error.format() 
+      });
+    }
+    
     passport.authenticate("local", (err: Error, user: SelectUser) => {
-      if (err) return next(err);
+      if (err) {
+        console.error("Error during authentication:", err);
+        return next(err);
+      }
+      
       if (!user) {
-        return res.status(401).json({ message: "اسم المستخدم أو كلمة المرور غير صحيحة" });
+        console.log("Authentication failed: Invalid credentials");
+        return res.status(401).json({ 
+          success: false, 
+          message: "اسم المستخدم أو كلمة المرور غير صحيحة" 
+        });
       }
 
+      console.log(`User ${user.username} authenticated successfully`);
+      
       req.login(user, (err) => {
-        if (err) return next(err);
+        if (err) {
+          console.error("Error during login session creation:", err);
+          return next(err);
+        }
         
-        // Remove password from response
+        // إزالة كلمة المرور من الاستجابة
         const { password, ...userWithoutPassword } = user;
-        res.json(userWithoutPassword);
+        console.log("Login successful, session created");
+        
+        res.json({
+          success: true,
+          user: userWithoutPassword
+        });
       });
     })(req, res, next);
   });

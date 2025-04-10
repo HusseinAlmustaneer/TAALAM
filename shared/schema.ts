@@ -90,7 +90,20 @@ export type LoginData = z.infer<typeof loginSchema>;
 
 // Registration schema with validation
 export const registerSchema = insertUserSchema.extend({
+  username: z.string().min(3, { message: "يجب أن يحتوي اسم المستخدم على 3 أحرف على الأقل" })
+    .max(30, { message: "يجب أن لا يتجاوز اسم المستخدم 30 حرفًا" })
+    .regex(/^[a-zA-Z0-9_]+$/, { 
+      message: "يجب أن يحتوي اسم المستخدم على أحرف إنجليزية وأرقام وشرطات سفلية فقط" 
+    }),
+  password: z.string()
+    .min(8, { message: "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل" })
+    .regex(/[A-Z]/, { message: "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل" })
+    .regex(/[a-z]/, { message: "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل" })
+    .regex(/[0-9]/, { message: "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل" }),
   confirmPassword: z.string(),
+  firstName: z.string().min(2, { message: "يجب أن يحتوي الاسم الأول على حرفين على الأقل" }),
+  lastName: z.string().min(2, { message: "يجب أن يحتوي الاسم الأخير على حرفين على الأقل" }),
+  email: z.string().email({ message: "يرجى إدخال بريد إلكتروني صحيح" }),
   terms: z.boolean().refine((val) => val === true, {
     message: "يجب الموافقة على الشروط والأحكام",
   }),
